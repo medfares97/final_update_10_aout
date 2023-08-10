@@ -186,14 +186,14 @@ class EbMergeTasks(models.Model):
                     if not ll1:
                         raise UserError(_('Action impossible!'), _("Merci de sauvegarder le document avant!"))
                     else:
+
                         for nn in ll1:
                             wrk = self.env['project.task.work'].browse(nn)
                             res_cpt.append(wrk.id)
 
-                        pp = set(ll).intersection(res_cpt)
+                    pp = set(ll).intersection(res_cpt)
                 else:
                     res_cpt = ll
-
             elif current.type == '2':
                 w = []
                 v = []
@@ -231,7 +231,6 @@ class EbMergeTasks(models.Model):
                 else:
                     res_cpt = ll
 
-            ##   raise osv.except_osv(_('Transfert impossible!'),_("Pas de Stock suffisant pour l'article %s  !")%ll)
             for kk in res_cpt:
                 if kk:
                     s2 = self.env['project.task.work'].browse(kk)
@@ -246,6 +245,7 @@ class EbMergeTasks(models.Model):
                             raise UserError(
                                 _("Action impossible!\n Le secteur de départ doit etre plus petit que le secteur de fin!"))
                     for jj in current.line_ids:
+
                         if jj.zone == 0 and jj.secteur > 0:
                             for hh in range(jj.secteur, jj.secteur_to + 1):
                                 if jj.employee_id:
@@ -359,10 +359,7 @@ class EbMergeTasks(models.Model):
                                     'wiz_id': current.id,
                                     'is_display': is_display
                                 }
-
-                                # Execute the query with parameter binding
                                 self.env.cr.execute(sql_query, params)
-
                         elif jj.zone > 0 and jj.secteur > 0:
                             for hh in range(jj.zone, jj.zone + 1):
                                 for vv in range(jj.secteur, jj.secteur_to + 1):
@@ -483,7 +480,6 @@ class EbMergeTasks(models.Model):
                                     # Execute the query with parameter binding
 
                                     self.env.cr.execute(sql_query, params)
-
                         elif jj.zone > 0 and jj.secteur == 0:
                             for hh in range(jj.zone, jj.zone + 1):
                                 if jj.employee_id:
